@@ -111,22 +111,16 @@ while running:
             array = preproc(array)  # обработка массива
             result = pred(array)  # получение предикта
             for i, box in enumerate(value_boxes):
-                if i == torch.argmax(result).item():
-                    prob = round(result[0][i].item(), 1)
-                    value = str(i) + ': ' + str(prob) + '%'
-                    pygame.draw.rect(sidebar, GREEN, box)
-                    font = pygame.font.Font(None, 24)
-                    text = font.render(f"{value}", True, BLACK)
-                    text_rect = text.get_rect(center=box.center)
-                    sidebar.blit(text, text_rect)
-                else:
-                    prob = round(result[0][i].item(), 1)
-                    value = str(i) + ': ' + str(prob) + '%'
-                    pygame.draw.rect(sidebar, WHITE, box)
-                    font = pygame.font.Font(None, 24)
-                    text = font.render(f"{value}", True, BLACK)
-                    text_rect = text.get_rect(center=box.center)
-                    sidebar.blit(text, text_rect)
+                prob = round(result[0][i].item(), 1)
+                x = prob / 100
+                R = round(255 * (1 - x))
+                G = round(255 * x)
+                value = str(i) + ': ' + str(prob) + '%'
+                pygame.draw.rect(sidebar, (R, G, 0), box)
+                font = pygame.font.Font(None, 24)
+                text = font.render(f"{value}", True, BLACK)
+                text_rect = text.get_rect(center=box.center)
+                sidebar.blit(text, text_rect)
 
         # Отображение поверхностей на основном экране
         sc.blit(drawing_window, (0, 0))

@@ -14,5 +14,5 @@ def preproc(im_array):
     tensor = torch.nn.functional.avg_pool2d(tensor_im, kernel_size, stride, padding, dilation)
     tensor = torch.rot90(tensor, 1, [2, 3])
     tensor = torch.flip(tensor, [2])
-    tensor = 255 - tensor
+    tensor = 254 - tensor
     return tensor
